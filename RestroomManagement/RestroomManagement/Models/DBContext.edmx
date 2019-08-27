@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="sdirecttestdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Checklist_Utility">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="U_ID" Type="int" Nullable="false" />
+          <Property Name="ShiftId" Type="int" Nullable="false" />
+          <Property Name="IsDone" Type="bit" Nullable="false" />
+          <Property Name="Feedback" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReadingDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ShiftMaster">
+          <Key>
+            <PropertyRef Name="ShiftId" />
+          </Key>
+          <Property Name="ShiftId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ShiftName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="StartTime" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="EndTime" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Utility">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Checklist__Shift__7A08D20D">
+          <End Role="ShiftMaster" Type="Self.ShiftMaster" Multiplicity="1" />
+          <End Role="Checklist_Utility" Type="Self.Checklist_Utility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShiftMaster">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Checklist_Utility">
+              <PropertyRef Name="ShiftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UID">
+          <End Role="Utility" Type="Self.Utility" Multiplicity="1" />
+          <End Role="Checklist_Utility" Type="Self.Checklist_Utility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utility">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Checklist_Utility">
+              <PropertyRef Name="U_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="INSERT_ChecklistUtility" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MRI">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="U_ID" Type="int" Mode="In" />
+          <Parameter Name="IsDone" Type="bit" Mode="In" />
+          <Parameter Name="Feedback" Type="nvarchar" Mode="In" />
+          <Parameter Name="IsDeleted" Type="bit" Mode="In" />
+          <Parameter Name="IsActive" Type="bit" Mode="In" />
+          <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+          <Parameter Name="ModifiedDate" Type="datetime" Mode="In" />
+          <Parameter Name="CreatedBy" Type="nvarchar" Mode="In" />
+          <Parameter Name="ModifiedBy" Type="nvarchar" Mode="In" />
+          <Parameter Name="ReadingDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="INSERT_Utility" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MRI">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="IsDeleted" Type="bit" Mode="In" />
+          <Parameter Name="IsActive" Type="bit" Mode="In" />
+          <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+          <Parameter Name="ModifiedDate" Type="datetime" Mode="In" />
+          <Parameter Name="CreatedBy" Type="nvarchar" Mode="In" />
+          <Parameter Name="ModifiedBy" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Utility_Report" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MRI" />
+        <EntityContainer Name="sdirecttestdbModelStoreContainer">
+          <EntitySet Name="Checklist_Utility" EntityType="Self.Checklist_Utility" Schema="MRI" store:Type="Tables" />
+          <EntitySet Name="ShiftMaster" EntityType="Self.ShiftMaster" Schema="MRI" store:Type="Tables" />
+          <EntitySet Name="Utility" EntityType="Self.Utility" Schema="MRI" store:Type="Tables" />
+          <AssociationSet Name="FK__Checklist__Shift__7A08D20D" Association="Self.FK__Checklist__Shift__7A08D20D">
+            <End Role="ShiftMaster" EntitySet="ShiftMaster" />
+            <End Role="Checklist_Utility" EntitySet="Checklist_Utility" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UID" Association="Self.FK_UID">
+            <End Role="Utility" EntitySet="Utility" />
+            <End Role="Checklist_Utility" EntitySet="Checklist_Utility" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="sdirecttestdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Checklist_Utility">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="U_ID" Type="Int32" Nullable="false" />
+          <Property Name="ShiftId" Type="Int32" Nullable="false" />
+          <Property Name="IsDone" Type="Boolean" Nullable="false" />
+          <Property Name="Feedback" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReadingDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ShiftMaster" Relationship="Self.FK__Checklist__Shift__7A08D20D" FromRole="Checklist_Utility" ToRole="ShiftMaster" />
+          <NavigationProperty Name="Utility" Relationship="Self.FK_UID" FromRole="Checklist_Utility" ToRole="Utility" />
+        </EntityType>
+        <EntityType Name="ShiftMaster">
+          <Key>
+            <PropertyRef Name="ShiftId" />
+          </Key>
+          <Property Name="ShiftId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShiftName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartTime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EndTime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Checklist_Utility" Relationship="Self.FK__Checklist__Shift__7A08D20D" FromRole="ShiftMaster" ToRole="Checklist_Utility" />
+        </EntityType>
+        <EntityType Name="Utility">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Checklist_Utility" Relationship="Self.FK_UID" FromRole="Utility" ToRole="Checklist_Utility" />
+        </EntityType>
+        <Association Name="FK__Checklist__Shift__7A08D20D">
+          <End Role="ShiftMaster" Type="Self.ShiftMaster" Multiplicity="1" />
+          <End Role="Checklist_Utility" Type="Self.Checklist_Utility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShiftMaster">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Checklist_Utility">
+              <PropertyRef Name="ShiftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UID">
+          <End Role="Utility" Type="Self.Utility" Multiplicity="1" />
+          <End Role="Checklist_Utility" Type="Self.Checklist_Utility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utility">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Checklist_Utility">
+              <PropertyRef Name="U_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="sdirecttestdbEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Checklist_Utility" EntityType="Self.Checklist_Utility" />
+          <EntitySet Name="ShiftMasters" EntityType="Self.ShiftMaster" />
+          <EntitySet Name="Utilities" EntityType="Self.Utility" />
+          <AssociationSet Name="FK__Checklist__Shift__7A08D20D" Association="Self.FK__Checklist__Shift__7A08D20D">
+            <End Role="ShiftMaster" EntitySet="ShiftMasters" />
+            <End Role="Checklist_Utility" EntitySet="Checklist_Utility" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UID" Association="Self.FK_UID">
+            <End Role="Utility" EntitySet="Utilities" />
+            <End Role="Checklist_Utility" EntitySet="Checklist_Utility" />
+          </AssociationSet>
+          <FunctionImport Name="INSERT_ChecklistUtility">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="U_ID" Mode="In" Type="Int32" />
+            <Parameter Name="IsDone" Mode="In" Type="Boolean" />
+            <Parameter Name="Feedback" Mode="In" Type="String" />
+            <Parameter Name="IsDeleted" Mode="In" Type="Boolean" />
+            <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+            <Parameter Name="CreatedDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ModifiedDate" Mode="In" Type="DateTime" />
+            <Parameter Name="CreatedBy" Mode="In" Type="String" />
+            <Parameter Name="ModifiedBy" Mode="In" Type="String" />
+            <Parameter Name="ReadingDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_Utility">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="IsDeleted" Mode="In" Type="Boolean" />
+            <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+            <Parameter Name="CreatedDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ModifiedDate" Mode="In" Type="DateTime" />
+            <Parameter Name="CreatedBy" Mode="In" Type="String" />
+            <Parameter Name="ModifiedBy" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Utility_Report" ReturnType="Collection(sdirecttestdbModel.Utility_Report_Result)" />
+        </EntityContainer>
+        <ComplexType Name="Utility_Report_Result">
+          <Property Type="Int32" Name="U_ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="ReadingDate" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="IsDone" Nullable="false" />
+          <Property Type="Int32" Name="ShiftId" Nullable="false" />
+          <Property Type="String" Name="ShiftName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Feedback" Nullable="true" MaxLength="100" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="sdirecttestdbModelStoreContainer" CdmEntityContainer="sdirecttestdbEntities1">
+          <EntitySetMapping Name="Checklist_Utility">
+            <EntityTypeMapping TypeName="sdirecttestdbModel.Checklist_Utility">
+              <MappingFragment StoreEntitySet="Checklist_Utility">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="U_ID" ColumnName="U_ID" />
+                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+                <ScalarProperty Name="IsDone" ColumnName="IsDone" />
+                <ScalarProperty Name="Feedback" ColumnName="Feedback" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ReadingDate" ColumnName="ReadingDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShiftMasters">
+            <EntityTypeMapping TypeName="sdirecttestdbModel.ShiftMaster">
+              <MappingFragment StoreEntitySet="ShiftMaster">
+                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilities">
+            <EntityTypeMapping TypeName="sdirecttestdbModel.Utility">
+              <MappingFragment StoreEntitySet="Utility">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="INSERT_ChecklistUtility" FunctionName="sdirecttestdbModel.Store.INSERT_ChecklistUtility" />
+          <FunctionImportMapping FunctionImportName="INSERT_Utility" FunctionName="sdirecttestdbModel.Store.INSERT_Utility" />
+          <FunctionImportMapping FunctionImportName="Utility_Report" FunctionName="sdirecttestdbModel.Store.Utility_Report">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="sdirecttestdbModel.Utility_Report_Result">
+                <ScalarProperty Name="U_ID" ColumnName="U_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ReadingDate" ColumnName="ReadingDate" />
+                <ScalarProperty Name="IsDone" ColumnName="IsDone" />
+                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+                <ScalarProperty Name="Feedback" ColumnName="Feedback" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
