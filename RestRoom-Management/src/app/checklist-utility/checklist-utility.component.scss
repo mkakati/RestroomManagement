@@ -1,0 +1,99 @@
+.hello{
+    background-color: cornflowerblue;
+    line-height: 10px;
+}
+
+.hi{
+    color: antiquewhite;
+    font-size: 30px;
+}
+
+.hj{
+    color: antiquewhite;
+    font-size: 18px;
+    margin-left: 870px;
+}
+
+.hk{
+    color: antiquewhite;
+    font-size: 18px;
+    margin-left: 20px;
+}
+
+.ff{
+    margin-top: 100px;
+    margin-left: 450px;
+    width: 330px;
+}
+
+.sell{
+    width: 150px;
+}
+
+.ra{
+    margin-left: 10px;
+}
+
+ .but{
+     margin-left: 10px;
+ }
+
+ .butt{
+    margin-left: 90px;
+}
+
+.pri{
+    margin-left: 90px;
+}
+
+.col{
+    color: cornflowerblue;
+}
+
+.tesi{
+    font-size: 17px;
+    color: cornflowerblue;
+}
+
+
+@media (max-width: 600px) {
+    .ff{
+        margin-top: 70px;
+        margin-left: 120px;
+        width: 200px;
+    }
+
+    .but{
+        margin-left: 20px;
+    }
+
+    .butt{
+       margin-left: 30px;
+   }
+
+   .pri{
+    margin-left: 30px;
+}
+
+.hi{
+    color: antiquewhite;
+    font-size: 25px;
+}
+
+.hj{
+    color: antiquewhite;
+    font-size: 15px;
+    margin-left: 80px;
+}
+
+.hk{
+    color: antiquewhite;
+    font-size: 15px;
+    margin-left: 10px;
+}
+a.hl{
+    color: cornflowerblue;
+    font-weight: bold;
+}
+
+}

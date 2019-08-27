@@ -1,0 +1,82 @@
+
+
+<div class="container-fluid">
+      <!--nav bar-->
+        <nav class="navbar navbar-expand-lg navbar-inverse hello unique-color" >
+            <a class="hi">Create new Utility</a>
+            <a class="hj" routerLink="/checklist" routerLinkActive="active">New Entry</a>
+            <a class="hk" routerLink="/shiftmaster" routerLinkActive="active">Create Shiftmaster</a>
+        </nav>
+
+         <!--form-->
+        <form class="ff" [formGroup]="utility" (ngSubmit)="onSubmit()"> 
+            <div class="alert alert-success" *ngIf="message!=null">{{message}}</div>
+
+            <!--utility-->
+        <div class="form-group">
+                <label class="tesi">Utility</label>
+                <input type="text" [class.is-invalid]="util.invalid && util.touched"
+                class="form-control" formControlName="Name">
+                <div *ngIf="util.invalid && util.touched" >
+                    <small *ngIf="util.errors?.required" class="text-danger">Utility is required</small>
+                </div>
+            </div>
+
+            <!--submit reset-->
+            <div class="form-group">
+                    <button [disabled]='!utility.valid' class="btn btn-danger pri" type="submit">Create</button>
+                    <button class="btn btn-secondary sec" type="reset">reset</button>
+                </div>
+                
+                
+              </form>
+            </div>
+       
+              <!-- <table class="table table-bordered table-striped tab">  
+                <thead>  
+                    <tr class="text-center text-uppercase">  
+                        <th>Sr.no</th>
+                        <th>Utilities</th>  
+                    </tr>  
+                </thead>  
+                <tbody>  
+                  <tr  *ngFor="let std of Utility; let i=index">
+                     <td >{{i+1}}  </td> 
+                    <td>{{std.Name}}</td>  
+                </tr>  
+            </tbody>  
+          </table>  -->
+
+          <!-- <button mat-button (click)="openDialog('Add',{})" mat-flat-button color="primary">Add Row</button> -->
+ 
+  <table mat-table   class=" mat-elevation-z8 tab">
+ 
+    <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+ 
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Sr.no </th>
+      <!-- <td mat-cell *matCellDef="let element"> {{i+1}} </td> -->
+    </ng-container>
+ 
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Utilities </th>
+      <!-- <td mat-cell *matCellDef="let element"> {{std.Name}} </td> -->
+    </ng-container>
+ 
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let element" class="action-link"> 
+        <!-- <a (click)="openDialog('Update',element)">Edit</a> | 
+        <a (click)="openDialog('Delete',element)">Delete</a>   -->
+      </td>
+    </ng-container>
+ 
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+        
+          

@@ -1,0 +1,78 @@
+
+<div class="container-fluid">
+  <!--nav bar-->
+  <nav class="navbar navbar-expand-lg navbar-inverse hello unique-color">
+    <a class="hi">New Entry</a>
+    <a class="hj" routerLink="/utility" routerLinkActive="active">Create Utility</a>
+    <a class="hk" routerLink="/shiftmaster" routerLinkActive="active">Create Shiftmaster</a>
+  </nav>
+
+  <!--form-->
+  <form class="ff" [formGroup]="checklistutility" (ngSubmit)="onSubmit()">
+      <div class="alert alert-success" *ngIf="message!=null">{{message}}</div>
+    <!--Date-->
+    <div class="form-group free">
+      <label class="tesi">Reading Date:(MM/DD/YYYY) </label>
+      <input id="ReadingDate" type="text" bsDatepicker class="form-control" formControlName="ReadingDate"
+      [maxDate]="maxDate" autocomplete="off">
+    </div>
+
+   
+    
+
+    <!--utility-->
+    <div class="form-group">
+      <label class="tesi">Utility:</label>
+      <div class="form-group"   *ngIf="utils">
+        <select class="form-control"  formControlName="U_ID">
+          <option value="">----Select---</option>
+          <option *ngFor="let util of utils" [ngValue]="util.$id">{{ util.Name }} </option>
+        </select>
+        <div class="text-danger" *ngIf="isSubmitted && U_ID.errors?.required">
+          <sup>*</sup>Please select Utility
+        </div>
+      </div>
+    </div>
+
+    <!--Status-->
+    <div class="form-group">
+      <label class="tesi">Status</label>
+      <input id="yes" type="radio" class="ra" value="1" name="IsDone" formControlName="IsDone"><label
+        for="yes">Yes</label>
+      <input id="no" type="radio" class="ra" value="0" name="IsDone" formControlName="IsDone"><label
+        for="no">No</label>
+      <div class="text-danger" *ngIf="isSubmitted && IsDone.errors?.required">
+        <p>Please select either value</p>
+      </div>
+    </div>
+
+    <!--Feedback-->
+    <div class="form-group">
+      <label class="tesi">Feedback</label>
+      <input type="text" class="form-control" formControlName="Feedback">
+    </div>
+
+    <!--Shift-->
+    <div class="form-group ">
+      <label class="tesi">Shift</label>
+      <div class="form-group" *ngIf="shifts">
+        <select class="form-control "  formControlName="ShiftId">
+          <option value="">----Select---</option>
+          <option *ngFor="let shift of shifts" [ngValue]="shift.$id">{{shift.ShiftName}}</option>
+        </select>
+        <div class="text-danger" *ngIf="isSubmitted && ShiftId.errors?.required">
+          <sup>*</sup>Please enter your shift
+        </div>
+      </div>
+    </div>
+
+    <!--submit reset-->
+    <div class="form-group">
+      <button class="btn btn-danger   butt" type="submit">Submit</button>
+      <button class="btn btn-secondary but" type="reset">reset</button>
+    </div>
+
+  </form>
+
+  <a class="hl" routerLink="/details" routerLinkActive="active"><-Back To Details</a>
+</div>

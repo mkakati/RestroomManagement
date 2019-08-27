@@ -1,0 +1,31 @@
+<div class="container-fluid"> 
+        <nav class="navbar navbar-expand-lg navbar-inverse hello unique-color">
+                <a class="hi">Details</a> 
+                <a class="hj" routerLink="/checklist" routerLinkActive="active">New Entry</a> 
+            </nav>
+    <h3 class="text-center text-uppercase">CheckList For RestRoom</h3>  
+    <table class="table table-bordered table-striped">  
+        <thead>  
+            <tr class="text-center text-uppercase">  
+              <th>Sr.no</th>
+                <th>Name</th>  
+                <!-- <th>ShiftId</th>   -->
+                <th>ShiftName</th>   
+                <th>IsDone</th> 
+                <th>Reading Date</th>
+              </tr>  
+        </thead>  
+        <tbody>  
+          <tr *ngFor="let std of Utility_Report;let i=index">
+            <td >{{i+1}}</td>  
+            <td>{{std.Name}}</td>  
+            <!-- <td>{{std.ShiftId}}</td>   -->
+            <td>{{std.ShiftName}}</td> 
+            <td>{{std.IsDone}}</td>  
+            <td >{{std.ReadingDate | date:'MM/dd/yyyy' }}</td> 
+            
+          </tr>  
+        </tbody>  
+      </table>  
+    </div>
+        

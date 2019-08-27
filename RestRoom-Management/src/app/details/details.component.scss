@@ -1,0 +1,30 @@
+.hi{
+    color: antiquewhite;
+    font-size: 30px;
+}
+
+.hj{
+    color: antiquewhite;
+    font-size: 18px;
+    margin-left: 1100px;
+}
+.hello{
+    background-color: cornflowerblue;
+    line-height: 10px;
+}
+@media (max-width: 600px) {
+    .hi{
+        color: antiquewhite;
+        font-size: 25px;
+    }
+    
+    .hj{
+        color: antiquewhite;
+        font-size: 15px;
+        margin-left: 300px;
+    }
+    .hello{
+        background-color: cornflowerblue;
+        line-height: 5px;
+    }
+}

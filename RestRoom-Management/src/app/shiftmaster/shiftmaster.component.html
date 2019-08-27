@@ -1,0 +1,82 @@
+<div class="container-fluid">
+    <!--nav bar-->
+    <nav class="navbar navbar-expand-lg navbar-inverse hello unique-color" >
+        <a class="hi">Create ShiftMaster</a>
+        <a class="hj" routerLink="/utility" routerLinkActive="active">Create Utility</a>
+        <a class="hk" routerLink="/checklist" routerLinkActive="active">New Entry</a>
+        <!-- <a routerLink="/Shiftmaster" routerLinkActive="active">Create Shiftmaster</a> -->
+    </nav>
+
+    <!--form-->
+   <form class="ff" [formGroup]="shiftmas" (ngSubmit)="onSubmit()">
+        <div class="alert alert-success" *ngIf="data">{{ message1 }}</div>
+
+    <!--start time-->
+        <div class="form-group">
+                <label class="tesi">start-time</label>
+                <input id="StartTime" value="StartTime" type="time" formControlName="StartTime" class="form-control">
+                 <!-- <timepicker [(ngModel)]="time" formControlName="start"  id="start" value="start"></timepicker> -->
+                 <!-- <pre class="alert alert-info">Time is: {{time}}</pre> -->
+                <!-- <div class="text-danger" *ngIf="isSubmitted && StartTime.errors?.required"> -->
+                       
+            </div>
+            <!-- </div> -->
+           
+            <!-- <pre class="alert alert-info">Time is: {{time}}</pre> -->
+            <!--End time-->
+            <div class="form-group">
+                    <label class="tesi">End-time</label>
+                    <input id="EndTime" value="EndTime" type="time" formControlName="EndTime" class="form-control">
+                    <!-- <div class="text-danger" *ngIf="isSubmitted && EndTime.errors?.required"></div> -->
+                </div>
+
+                 <!--Shift-->
+                 <div class="form-group ">
+                    <label class="tesi">Shift</label>
+                    <!-- <div class="form-group">
+                    <select class="form-control " (change)="changeshift($event)" formControlName="ShiftName">
+                      <option value="">----Select---</option>
+                      <option *ngFor="let shift of shifts" [ngValue]="shift">{{shift}}</option>
+                    </select>
+                    <div class="text-danger" *ngIf="isSubmitted && ShiftName.errors?.required">
+                      <sup>*</sup>Please enter your shift
+                   </div>
+                   </div>-->
+                    </div>  
+
+                    <div class="form-group">
+                        <input [class.is-invalid]="ShiftName.invalid && ShiftName.touched" type="text" class="form-control" formControlName="ShiftName">
+                        <div *ngIf="ShiftName.invalid && ShiftName.touched">
+                                <small *ngIf="isSubmitted && ShiftName.errors?.required" class="text-danger" >Shiftname is required</small>
+                    </div>
+                 </div>
+                     <!--Submit reset-->
+                          <div class="form-group">
+                                <button  class="btn btn-danger butt" type="submit">Submit</button>
+                                <button class="btn btn-secondary but" type="reset">reset</button>
+                            </div>
+ 
+ <table class="table table-bordered table-striped">  
+        <thead>  
+            <tr class="text-center text-uppercase"> 
+                 <th>Sr.no</th>
+                    <th>ShiftName</th> 
+                <th>StartTime</th>  
+                <th>EndTime</th>  
+                
+
+            </tr>  
+        </thead>   
+        <tbody>  
+          <tr *ngFor="let std of Shift;let i=index">
+              <td>{{i+1}}</td>  
+                <td>{{std.ShiftName}}</td> 
+            <td>{{std.StartTime}}</td>  
+            <td>{{std.EndTime}}</td>  
+            
+        </tr>  
+    </tbody>  
+  </table> 
+</form>
+
+</div>
