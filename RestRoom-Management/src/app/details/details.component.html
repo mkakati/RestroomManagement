@@ -1,31 +1,67 @@
-<div class="container-fluid"> 
+<div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-inverse hello unique-color">
-                <a class="hi">Details</a> 
-                <a class="hj" routerLink="/checklist" routerLinkActive="active">New Entry</a> 
+                <a class="hi">Details</a>
+                <a class="hj" routerLink="/checklist" routerLinkActive="active">New Entry</a>
             </nav>
-    <h3 class="text-center text-uppercase">CheckList For RestRoom</h3>  
-    <table class="table table-bordered table-striped">  
-        <thead>  
-            <tr class="text-center text-uppercase">  
-              <th>Sr.no</th>
-                <th>Name</th>  
-                <!-- <th>ShiftId</th>   -->
-                <th>ShiftName</th>   
-                <th>IsDone</th> 
-                <th>Reading Date</th>
-              </tr>  
-        </thead>  
-        <tbody>  
-          <tr *ngFor="let std of Utility_Report;let i=index">
-            <td >{{i+1}}</td>  
-            <td>{{std.Name}}</td>  
-            <!-- <td>{{std.ShiftId}}</td>   -->
-            <td>{{std.ShiftName}}</td> 
-            <td>{{std.IsDone}}</td>  
-            <td >{{std.ReadingDate | date:'MM/dd/yyyy' }}</td> 
+    <h3 class="text-center text-uppercase">CheckList For RestRoom</h3>
+
+
+
+    <div class="container mat-elevation-z8  ">
+        <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+
+           <ng-container matColumnDef="position">
+               <mat-header-cell *matHeaderCellDef>Sr.No </mat-header-cell>
+               <mat-cell *matCellDef="let shift; let i = index;"> {{i+1}} </mat-cell>
+             </ng-container>
+
+             <ng-container matColumnDef="Name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                <mat-cell *matCellDef="let report" >{{report.Name}}</mat-cell>
+             </ng-container>
+
+             <ng-container matColumnDef="ShiftName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>ShiftName</mat-header-cell>
+                <mat-cell *matCellDef="let report" >{{report.ShiftName}}</mat-cell>
+             </ng-container>
+
+             <ng-container matColumnDef="Status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                <mat-cell *matCellDef="let report" >{{report.IsDone}}</mat-cell>
+             </ng-container>
+
+             <ng-container matColumnDef="Date">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>ReadingDate</mat-header-cell>
+                <mat-cell *matCellDef="let report" >{{report.ReadingDate}}</mat-cell>
+             </ng-container>
+             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  
+             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </div>
             
-          </tr>  
-        </tbody>  
-      </table>  
+    <!-- <table class="table table-bordered table-striped">
+        <thead>
+            <tr class="text-center text-uppercase">
+              <th>Sr.no</th>
+                <th>Name</th>
+                 <th>ShiftId</th>  
+                <th>ShiftName</th>
+                <th>Status</th>
+                <th>Reading Date</th>
+              </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let std of Utility_Report;let i=index">
+            <td >{{i+1}}</td>
+            <td>{{std.Name}}</td>
+             <td>{{std.ShiftId}}</td>   
+            <td>{{std.ShiftName}}</td>
+            <td>{{std.IsDone}}</td>
+            <td >{{std.ReadingDate | date:'MM/dd/yyyy' }}</td>
+
+          </tr>
+        </tbody>
+      </table> -->
     </div>
-        
+

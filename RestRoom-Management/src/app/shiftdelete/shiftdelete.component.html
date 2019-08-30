@@ -1,0 +1,19 @@
+<div class="container">
+        <h3 mat-dialog-title>Are you sure?</h3>
+        <div mat-dialog-content>
+                Shift Id: {{data.ShiftId}}
+                <p></p>
+                Shift Name: {{data.ShiftName}}
+          <p></p>
+          Start Time: {{data.StartTime}}
+          <p></p>
+          EndTime: {{data.EndTime}}
+          <p></p>
+        </div>
+      
+        <div mat-dialog-actions>
+          <button class="btn-danger" mat-button [mat-dialog-close]="1" (click)="confirmDelete()">Delete</button>
+          <button class="btn btn-secondary" mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+        </div>
+      </div>
+

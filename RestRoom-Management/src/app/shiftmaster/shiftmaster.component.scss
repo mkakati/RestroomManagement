@@ -1,8 +1,25 @@
-.ff{
-    margin-top: 100px;
-    margin-left: 450px;
-    width: 330px;
+.time-picker-wrapper {
+    padding: 1rem;
+  }
+
+.fl{
+    margin-top: 80px;
+    margin-left: 150px;
+    // width: 330px;
+        float: left;
+        width: 330px;
+        padding: 10px;
 }
+.fr{
+   width:450px;
+   float: right; 
+}
+
+.row:after {
+    content: "";
+   display: table;
+    clear: both;
+  }
 .hello{
     background-color: cornflowerblue;
     line-height: 10px;
@@ -11,15 +28,26 @@
     color: antiquewhite;
     font-size: 30px;
 }
+
+.hg{
+    color: antiquewhite;
+    font-size: 18px;
+    margin-left: 730px;
+}
 .hj{
     color: antiquewhite;
     font-size: 18px;
-    margin-left: 800px;
+    margin-left: 25px;
 }
 .hk{
     color: antiquewhite;
     font-size: 18px;
     margin-left: 20px;
+}
+a.hl{
+    color: cornflowerblue;
+    font-weight: bold;
+    margin-left: 30px;
 }
 
 .but{

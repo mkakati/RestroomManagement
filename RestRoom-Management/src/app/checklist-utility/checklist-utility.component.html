@@ -3,8 +3,10 @@
   <!--nav bar-->
   <nav class="navbar navbar-expand-lg navbar-inverse hello unique-color">
     <a class="hi">New Entry</a>
+    <a class="hg" routerLink="/details" routerLinkActive="active">Details</a>
     <a class="hj" routerLink="/utility" routerLinkActive="active">Create Utility</a>
     <a class="hk" routerLink="/shiftmaster" routerLinkActive="active">Create Shiftmaster</a>
+    
   </nav>
 
   <!--form-->
@@ -26,7 +28,7 @@
       <div class="form-group"   *ngIf="utils">
         <select class="form-control"  formControlName="U_ID">
           <option value="">----Select---</option>
-          <option *ngFor="let util of utils" [ngValue]="util.$id">{{ util.Name }} </option>
+          <option *ngFor="let util of utils" [ngValue]="util.ID">{{ util.Name }} </option>
         </select>
         <div class="text-danger" *ngIf="isSubmitted && U_ID.errors?.required">
           <sup>*</sup>Please select Utility
@@ -58,7 +60,7 @@
       <div class="form-group" *ngIf="shifts">
         <select class="form-control "  formControlName="ShiftId">
           <option value="">----Select---</option>
-          <option *ngFor="let shift of shifts" [ngValue]="shift.$id">{{shift.ShiftName}}</option>
+          <option *ngFor="let shift of shifts" [ngValue]="shift.ShiftId">{{shift.ShiftName}}</option>
         </select>
         <div class="text-danger" *ngIf="isSubmitted && ShiftId.errors?.required">
           <sup>*</sup>Please enter your shift
@@ -74,5 +76,5 @@
 
   </form>
 
-  <a class="hl" routerLink="/details" routerLinkActive="active"><-Back To Details</a>
+  <!-- <a class="hl" routerLink="/details" routerLinkActive="active"><-Back To Details</a> -->
 </div>

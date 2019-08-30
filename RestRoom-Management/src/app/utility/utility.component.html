@@ -4,12 +4,15 @@
       <!--nav bar-->
         <nav class="navbar navbar-expand-lg navbar-inverse hello unique-color" >
             <a class="hi">Create new Utility</a>
+            <a class="hg" routerLink="/details" routerLinkActive="active">Details</a>
             <a class="hj" routerLink="/checklist" routerLinkActive="active">New Entry</a>
             <a class="hk" routerLink="/shiftmaster" routerLinkActive="active">Create Shiftmaster</a>
+            
         </nav>
-
+</div>
+<div class="container-fluid">
          <!--form-->
-        <form class="ff" [formGroup]="utility" (ngSubmit)="onSubmit()"> 
+        <form class="fl" [formGroup]="utility" (ngSubmit)="onSubmit()"> 
             <div class="alert alert-success" *ngIf="message!=null">{{message}}</div>
 
             <!--utility-->
@@ -30,53 +33,131 @@
                 
                 
               </form>
-            </div>
-       
+            
+              
+
+           <div class="container mat-elevation-z8 fr ">
+                <!-- <mat-toolbar color="primary" class="tool">
+                    <span>Utilities</span>
+                    <span class="spacer"></span>
+                    Reload data:
+                    <button mat-icon-button (click)="refresh()">
+                      <mat-icon>refresh</mat-icon>
+                    </button>
+                  </mat-toolbar> -->
+             <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+
+                <ng-container matColumnDef="position">
+                    <mat-header-cell *matHeaderCellDef>Sr.No </mat-header-cell>
+                    <mat-cell *matCellDef="let shift; let i = index;"> {{i+1}} </mat-cell>
+                  </ng-container>
+
+                <!-- <ng-container matColumnDef="ID">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                    <mat-cell *matCellDef="let Utility" >{{Utility.ID}}</mat-cell>
+                 </ng-container> -->
+             <ng-container matColumnDef="Name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Utilities</mat-header-cell>
+                <mat-cell *matCellDef="let Utility" >{{Utility.Name}}</mat-cell>
+             </ng-container>
+
+
+              <ng-container matColumnDef="action">
+                  <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                <mat-cell *matCellDef="let Utility">
+                    <button mat-icon-button color="accent" (click)="startEdit(Utility.ID,Utility.Name)">
+                      <mat-icon aria-label="Edit">edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="accent" (click)="deleteItem(i,Utility.ID,Utility.Name )">
+                        <mat-icon aria-label="Delete">delete</mat-icon>
+                      </button>
+                    </mat-cell>
+                  </ng-container> 
+
+
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  
+                  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+             </mat-table>
+           </div>
+          </div>
+             <!-- <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+                No results
+              </div> -->
+              <!-- <mat-paginator #paginator
+                 [length]="dataSource.filteredData.length"
+                 [pageIndex]="0"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]">
+                  </mat-paginator> 
+                </div>-->
+             
+ 
+                 <!-- <mat-toolbar color="primary">
+                <span>Utilities</span>
+                <span class="spacer"></span>
+                Reload data:
+                <button mat-icon-button (click)="refresh()">
+                  <mat-icon>refresh</mat-icon>
+                </button>
+              </mat-toolbar>
+
+          
+             <table mat-table [dataSource]="Utility" #mytable class="my-table mat-elevation-z8">
+                <ng-container matColumnDef="ID">
+                    <th mat-header-cell *matHeaderCellDef>ID</th>
+                    <td mat-cell *matCellDef="let Utility" >{{Utility.ID}}</td>        
+                      </ng-container>
+            
+            
+            
+               <ng-container matColumnDef="Name">
+                <th mat-header-cell *matHeaderCellDef>Utilities</th>
+                <td mat-cell *matCellDef="let Utility" >{{Utility.Name}}</td>        
+                  </ng-container>
+
+
+             <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>Action</th>
+                <td mat-cell *matCellDef="let Utility" class="action-link">
+                    <a (click)="openDialog('Update',Utility)">Edit</a>
+                    <a (click)="openDialog('Delete',Utility)">Delete</a>
+                  </td>
+                  </ng-container>
+
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+             </table>
+             
+             <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+                No results
+              </div>  -->
+
+
+                
+          
+                
+
               <!-- <table class="table table-bordered table-striped tab">  
                 <thead>  
                     <tr class="text-center text-uppercase">  
                         <th>Sr.no</th>
-                        <th>Utilities</th>  
+                        <th>ID</th>
+                        <th>Utilities</th>
+                        <th>Action</th>  
                     </tr>  
                 </thead>  
                 <tbody>  
                   <tr  *ngFor="let std of Utility; let i=index">
                      <td >{{i+1}}  </td> 
+                     <td>{{std.ID}}</td>
                     <td>{{std.Name}}</td>  
                 </tr>  
             </tbody>  
           </table>  -->
 
-          <!-- <button mat-button (click)="openDialog('Add',{})" mat-flat-button color="primary">Add Row</button> -->
- 
-  <table mat-table   class=" mat-elevation-z8 tab">
- 
-    <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
- 
-    <!-- Id Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> Sr.no </th>
-      <!-- <td mat-cell *matCellDef="let element"> {{i+1}} </td> -->
-    </ng-container>
- 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Utilities </th>
-      <!-- <td mat-cell *matCellDef="let element"> {{std.Name}} </td> -->
-    </ng-container>
- 
-    <!-- Action Column -->
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> Action </th>
-      <td mat-cell *matCellDef="let element" class="action-link"> 
-        <!-- <a (click)="openDialog('Update',element)">Edit</a> | 
-        <a (click)="openDialog('Delete',element)">Delete</a>   -->
-      </td>
-    </ng-container>
- 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-        
+          <!-- <a class="hl" routerLink="/details" routerLinkActive="active"><-Back To Details</a> -->
+  
           

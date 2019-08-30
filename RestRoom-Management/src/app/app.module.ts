@@ -18,7 +18,14 @@ import { DetailsComponent } from './details/details.component';
 import {HttpClientModule,HttpClient} from '@angular/common/http';
 import { TimepickerModule } from 'ngx-bootstrap';
 import { NgAlertModule } from '@theo4u/ng-alert';
-import {NgxPaginationModule} from 'ngx-pagination'; 
+import {NgxPaginationModule} from 'ngx-pagination';
+import { DeleteComponent } from './dialogs/delete/delete.component';
+import { EditComponent } from './dialogs/edit/edit.component'; 
+import {AddDataService} from './shared/add-data.service';
+import { ShifteditComponent } from './shiftedit/shiftedit.component';
+import { ShiftdeleteComponent } from './shiftdelete/shiftdelete.component';
+import { AmazingTimePickerModule } from 'amazing-time-picker';
+import { IgxTimePickerModule, IgxTimePickerComponent } from "igniteui-angular";
 
 @NgModule({
   declarations: [
@@ -26,7 +33,11 @@ import {NgxPaginationModule} from 'ngx-pagination';
     UtilityComponent,
     ChecklistUtilityComponent,
     ShiftmasterComponent,
-    DetailsComponent
+    DetailsComponent,
+   DeleteComponent,
+    EditComponent,
+    ShifteditComponent,
+    ShiftdeleteComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,9 +54,17 @@ import {NgxPaginationModule} from 'ngx-pagination';
     RouterModule.forRoot(routes),
     HttpClientModule,
     NgAlertModule ,
-    NgxPaginationModule
+    NgxPaginationModule,
+    AmazingTimePickerModule,
+    IgxTimePickerModule
   ],
-  providers: [],
+  entryComponents: [
+    EditComponent,
+    DeleteComponent,
+    ShifteditComponent,
+    ShiftdeleteComponent
+  ],
+  providers: [AddDataService,IgxTimePickerComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

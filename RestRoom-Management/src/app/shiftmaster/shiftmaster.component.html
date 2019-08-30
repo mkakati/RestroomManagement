@@ -2,25 +2,33 @@
     <!--nav bar-->
     <nav class="navbar navbar-expand-lg navbar-inverse hello unique-color" >
         <a class="hi">Create ShiftMaster</a>
+        <a class="hg" routerLink="/details" routerLinkActive="active">Details</a>
         <a class="hj" routerLink="/utility" routerLinkActive="active">Create Utility</a>
         <a class="hk" routerLink="/checklist" routerLinkActive="active">New Entry</a>
-        <!-- <a routerLink="/Shiftmaster" routerLinkActive="active">Create Shiftmaster</a> -->
+        
     </nav>
-
+</div>
+<div class="container-fluid row">
     <!--form-->
-   <form class="ff" [formGroup]="shiftmas" (ngSubmit)="onSubmit()">
+   <form class="fl" [formGroup]="shiftmas" (ngSubmit)="onSubmit()">
         <div class="alert alert-success" *ngIf="data">{{ message1 }}</div>
 
     <!--start time-->
-        <div class="form-group">
+        <div class="form-group">  
                 <label class="tesi">start-time</label>
-                <input id="StartTime" value="StartTime" type="time" formControlName="StartTime" class="form-control">
-                 <!-- <timepicker [(ngModel)]="time" formControlName="start"  id="start" value="start"></timepicker> -->
+        </div>
+        <div>
+                <input type="time" formControlName="StartTime" class="form-control">
+                 <!-- <timepicker  formControlName="StartTime"  id="StartTime" value="StartTime" ></timepicker> -->
                  <!-- <pre class="alert alert-info">Time is: {{time}}</pre> -->
                 <!-- <div class="text-danger" *ngIf="isSubmitted && StartTime.errors?.required"> -->
+                  <!-- <div class="time-picker-wrapper">-->
+                    <!-- <div class="time-picker-wrapper ">
+                    <igx-time-picker formControlName="StartTime" format="hh:mm tt"></igx-time-picker>  -->
+                    
                        
             </div>
-            <!-- </div> -->
+           
            
             <!-- <pre class="alert alert-info">Time is: {{time}}</pre> -->
             <!--End time-->
@@ -46,17 +54,17 @@
 
                     <div class="form-group">
                         <input [class.is-invalid]="ShiftName.invalid && ShiftName.touched" type="text" class="form-control" formControlName="ShiftName">
-                        <div *ngIf="ShiftName.invalid && ShiftName.touched">
-                                <small *ngIf="isSubmitted && ShiftName.errors?.required" class="text-danger" >Shiftname is required</small>
+                        <div *ngIf="ShiftName.invalid && ShiftName.touched || isSubmitted && ShiftName.errors?.required">
+                                <small class="text-danger" >Shiftname is required</small>   
                     </div>
+                    <!-- <small *ngIf="isSubmitted && ShiftName.errors?.required" class="text-danger" >Shiftname is required</small> -->
                  </div>
                      <!--Submit reset-->
                           <div class="form-group">
                                 <button  class="btn btn-danger butt" type="submit">Submit</button>
                                 <button class="btn btn-secondary but" type="reset">reset</button>
                             </div>
- 
- <table class="table table-bordered table-striped">  
+ <!-- <table class="table table-bordered table-striped">  
         <thead>  
             <tr class="text-center text-uppercase"> 
                  <th>Sr.no</th>
@@ -76,7 +84,54 @@
             
         </tr>  
     </tbody>  
-  </table> 
+  </table>--> 
+
 </form>
 
-</div>
+<div class="container mat-elevation-z8 fr">
+         <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+        
+            <ng-container matColumnDef="position">
+                    <mat-header-cell *matHeaderCellDef>Sr.No </mat-header-cell>
+                    <mat-cell *matCellDef="let shift; let i = index;"> {{i+1}} </mat-cell>
+                  </ng-container>
+
+        <ng-container matColumnDef="ShiftName">
+           <mat-header-cell *matHeaderCellDef mat-sort-header>ShiftName</mat-header-cell>
+           <mat-cell *matCellDef="let Shift" >{{Shift.ShiftName}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="StartTime">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>StartTime</mat-header-cell>
+                <mat-cell *matCellDef="let Shift" >{{Shift.StartTime}}</mat-cell>
+             </ng-container>
+         
+             <ng-container matColumnDef="EndTime">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>EndTime</mat-header-cell>
+                    <mat-cell *matCellDef="let Shift" >{{Shift.EndTime}}</mat-cell>
+                 </ng-container>
+
+
+                 <ng-container matColumnDef="Action">
+                        <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                      <mat-cell *matCellDef="let Shiftmas">
+                          <button mat-icon-button color="accent" (click)="startEdit(Shiftmas.ShiftId,
+                          Shiftmas.ShiftName,Shiftmas.StartTime,Shiftmas.EndTime)">
+                            <mat-icon aria-label="Edit">edit</mat-icon>
+                          </button>
+                          <button mat-icon-button color="accent" (click)="deleteItem(i,Shiftmas.ShiftId,
+                          Shiftmas.ShiftName,Shiftmas.StartTime,Shiftmas.EndTime)">
+                              <mat-icon aria-label="Delete">delete</mat-icon>
+                            </button>
+                          </mat-cell>
+                        </ng-container> 
+      
+
+             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+             
+             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        </div>
+       </div>
+       <!-- <a class="hl" routerLink="/details" routerLinkActive="active"><-Back To Details</a> -->

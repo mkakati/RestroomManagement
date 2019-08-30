@@ -4,6 +4,12 @@ import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AddDataService } from '../shared/add-data.service';
 import { addshift } from './shift';
 import { HttpClient } from '@angular/common/http';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { Time } from '@angular/common';
+import { ShifteditComponent } from '../shiftedit/shiftedit.component';
+import { ShiftdeleteComponent } from '../shiftdelete/shiftdelete.component';
+import { IgxTimePickerComponent } from "igniteui-angular";
+
 
 @Component({
   selector: 'app-shiftmaster',
@@ -11,15 +17,20 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./shiftmaster.component.scss']
 })
 export class ShiftmasterComponent implements OnInit {
+  
+  displayedColumns:string[] = ['position','ShiftName','StartTime','EndTime','Action'];
+  dataSource: MatTableDataSource<string>;
+  index: number;
+  ShiftId: number;
   isSubmitted = false;
 
-  time: Date = new Date();
   
-  Shift: string[];
+ // Shift: string[];
   ngOnInit() {
+    this.dataSource = new MatTableDataSource(); 
     this.httpservice.get('http://localhost:58490/api/Shift/GetShifts').subscribe
     (data =>{
-       this.Shift=data as string[];
+       this.dataSource.data=data as string[];
     }
     );
   }
@@ -27,13 +38,15 @@ export class ShiftmasterComponent implements OnInit {
   data=false;
   message1:string;
 
-  constructor(private httpservice:HttpClient,private shiftservice:AddDataService,private router: Router,private _activatedroute:ActivatedRoute,private fb:FormBuilder) {   }
+  constructor(public dialog: MatDialog,private httpservice:HttpClient,private shiftservice:AddDataService,private router: Router,private _activatedroute:ActivatedRoute,private fb:FormBuilder) { 
 
-  shifts=['Morning','Afternoon','Evening'];
+    }
+
+  //shifts=['Morning','Afternoon','Evening'];
 
 
   shiftmas=this.fb.group({
-    StartTime:['',],
+    StartTime:[''],
     EndTime:[''],
     ShiftName:['',[Validators.required]]
   })
@@ -54,6 +67,7 @@ export class ShiftmasterComponent implements OnInit {
     return this.shiftmas.get('ShiftName');
   }
   onSubmit() {
+    
     this.isSubmitted = true;
     if (!this.shiftmas.valid) {
       return
@@ -66,6 +80,7 @@ export class ShiftmasterComponent implements OnInit {
     }
  }
  Createshift(shiftmas:addshift){
+   
   this.shiftservice.Createshift(shiftmas).subscribe(    
     ()=>    
     { debugger;
@@ -74,6 +89,38 @@ export class ShiftmasterComponent implements OnInit {
       this.shiftmas.reset();   
       this.ngOnInit(); 
     });    
+  }
+
+
+  startEdit(ShiftId:number, ShiftName:string,StartTime:Time,EndTime:Time) {
+    this.ShiftId = ShiftId;debugger;
+    const dialogRef = this.dialog.open(ShifteditComponent, {
+      
+      data: {ShiftId:ShiftId,ShiftName: ShiftName,StartTime:StartTime,EndTime:EndTime}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        const foundIndex = this.shiftservice.dataChange1.value.findIndex(x => x.ShiftId === this.ShiftId);
+        this.shiftservice.dataChange1.value[foundIndex] = this.shiftservice.getDialogData();
+        this.ngOnInit();
+      }
+    });
+  }
+
+  deleteItem(i: number,ShiftId:number,ShiftName:string,StartTime:Time,EndTime:Time) {
+    this.index = i;
+    this.ShiftId = ShiftId;
+    const dialogRef = this.dialog.open(ShiftdeleteComponent, {
+      data: {ShiftId:ShiftId,ShiftName: ShiftName,StartTime:StartTime,EndTime:EndTime}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        const foundIndex = this.shiftservice.dataChange1.value.findIndex(x => x.ShiftId === this.ShiftId);
+        this.shiftservice.dataChange1.value.splice(foundIndex, 1);
+        this.ngOnInit();
+        
+      }
+    });
   }
  }
 
