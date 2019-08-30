@@ -1,4 +1,5 @@
 ﻿using RestroomManagement.Models;
+using RestroomManagement.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,27 +13,42 @@ namespace RestroomManagement.Controllers
     {
         private sdirecttestdbEntities1 db = new sdirecttestdbEntities1();
         [HttpGet]
-        public IList<ShiftMaster> GetShifts()
+        public ResponseModel GetShifts()
         {
-            List<ShiftMaster> shiftMasters = new List<ShiftMaster>();
+            ResponseModel response = new ResponseModel();
+            try
             {
-                var result = db.ShiftMasters.ToList();
-                foreach (var item in result.ToList())
+                List<Shift> shiftMasters = new List<Shift>();
                 {
-                    shiftMasters.Add(new ShiftMaster
+                    var result = db.ShiftMasters.Where(x => x.IsDeleted == false).ToList();
+                    foreach (var item in result.ToList())
                     {
-                        //ShiftId = item.ShiftId,
-                        ShiftName = item.ShiftName,
-                        StartTime = item.StartTime,
-                        EndTime = item.EndTime
+                        shiftMasters.Add(new Shift
+                        {
+                            ShiftId = item.ShiftId,
+                            ShiftName = item.ShiftName,
+                            StartTime = item.StartTime,
+                            EndTime = item.EndTime,
+                            IsActive = item.IsActive,
+                            IsDeleted = item.IsDeleted
 
 
+                        }
+                        );
                     }
-                    );
+                    
+
                 }
-                return shiftMasters;
+                response.StatusCode = 200;
+            }
+            catch(Exception ex)
+            {
+                response.StatusCode = 400;
+                response.Message = ex.Message;
+
 
             }
+            return response;
 
         }
         //public List<ShiftMaster> GetShifts()
@@ -86,7 +102,7 @@ namespace RestroomManagement.Controllers
             return Ok();
         }
         [HttpPut]
-        public IHttpActionResult PutUtility(ShiftMaster shift)
+        public IHttpActionResult PutShift(ShiftMaster shift)
         {
 
             using (var ctx = new sdirecttestdbEntities1())

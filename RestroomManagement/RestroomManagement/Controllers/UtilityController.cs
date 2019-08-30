@@ -1,9 +1,8 @@
 ﻿using RestroomManagement.Models;
+using RestroomManagement.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace RestroomManagement.Controllers
@@ -11,117 +10,164 @@ namespace RestroomManagement.Controllers
     public class UtilityController : ApiController
     {
         private sdirecttestdbEntities1 db = new sdirecttestdbEntities1();
-        //get
-        public IList<Utility> GetUtilities()
+        [HttpGet]
+        public ResponseModel GetUtilities()
         {
-            List<Utility> listx = new List<Utility>();
-            //using (sdirecttestdbEntities test = new sdirecttestdbEntities())
+            ResponseModel response = new ResponseModel();
+            try
             {
-                var result = db.Utilities.ToList();
-                foreach (var item in result.ToList())
+                List<Util> listx = new List<Util>();
+               
                 {
-                    listx.Add(new Utility
+                    var result = db.Utilities.Where(x=>x.IsDeleted==false).ToList();
+                    foreach (var item in result.ToList())
                     {
-                        //ID = item.ID,
-                        Name = item.Name
+                        listx.Add(new Util
+                        {
+                            ID = item.ID,
+                            Name = item.Name,
+                            IsActive = item.IsActive,
+                            IsDeleted = item.IsDeleted
+
+
+                        });
+
+                    }
+                    
+                }
+                response.StatusCode = 200;
+                response.Message = "Success";
+                response.Data = listx;
+             
+
+            }
+            
+            catch(Exception ex)
+            {
+
+                response.StatusCode = 400;
+                response.Message = ex.Message;
+            }
+            return response;
+            
+            
+        }
+        
+
+        
+        [HttpPost]
+        public IHttpActionResult PostUtility(Util util)
+        {
+            ResponseModel res = new ResponseModel();
+            try
+            {
+                using (var ctx = new sdirecttestdbEntities1())
+                {
+                    ctx.Utilities.Add(new Utility()
+                    {
+                        Name = util.Name,
+                        CreatedDate = System.DateTime.Now,
+                        ModifiedDate = System.DateTime.Now,
+                        IsDeleted = false,
+                        IsActive = false,
+                        CreatedBy = Environment.UserName,
+                        ModifiedBy = Environment.UserName
+                    
+                    
 
 
                     });
-
-                }
-                return listx;
-            }
-        }
-        //public List<Utility> GetUtilities()
-        //{
-        //    try
-        //    {
-        //        return db.Utilities.ToList();
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
-        //post
-        
-        //public IHttpActionResult PostUtility(Utility utility)
-        //{
-        //    try
-        //    {
-        //        db.Utilities.Add(utility);
-        //        db.SaveChanges();
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-                
-        //    }
-        //    return Ok(utility);
-        //}
-        //post
-        [HttpPost]
-        public IHttpActionResult PostUtility(Utility utility)
-        {
-           
-
-            using (var ctx = new sdirecttestdbEntities1())
-            {
-                ctx.Utilities.Add(new Utility()
-                {
-                    //ID = utility.ID,
-                    Name = utility.Name,
-                    //CreatedDate = utility.CreatedDate,
-                    //ModifiedDate = utility.ModifiedDate,
-                    
-                });
-
-                ctx.SaveChanges();
-            }
-
-            return Ok();
-        }
-        [HttpPut]
-        public IHttpActionResult PutUtility(Utility utility)
-        {
-
-            using (var ctx = new sdirecttestdbEntities1())
-            {
-                var existingUtility = ctx.Utilities.Where(s => s.ID == utility.ID)
-                                                        .FirstOrDefault<Utility>();
-
-                if (existingUtility!= null)
-                {
-                    existingUtility.Name = utility.Name;
-                    
-
                     ctx.SaveChanges();
                 }
-                else
-                {
-                    return NotFound();
-                }
-            }
+                res.StatusCode = 200;
+                res.Message = "Success";
 
-            return Ok();
+            }
+            catch(Exception ex)
+            {
+                res.StatusCode = 400;
+                res.Message = ex.Message;
+            }
+            return Ok(res);
         }
+        [HttpPut]
+        public IHttpActionResult PutUtility(Util util)
+        {
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                using (var ctx = new sdirecttestdbEntities1())
+                {
+                    var existingUtility = ctx.Utilities.Where(s => s.ID == util.ID)
+                                                            .FirstOrDefault<Utility>();
+
+                    if (existingUtility != null)
+                    {
+                        existingUtility.Name = util.Name;
+                        existingUtility.ModifiedDate = System.DateTime.Now;
+                        existingUtility.ModifiedBy = Environment.UserName;
+                       
+
+
+                        //var uti = ctx.Checklist_Utility.Where(x => x.U_ID == util.ID).FirstOrDefault();
+
+                        //uti.IsActive = true;
+
+                        ctx.SaveChanges();
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                response.StatusCode = 200;
+                response.Message = "Success";
+
+
+            }
+            catch(Exception ex)
+            {
+                response.StatusCode = 400;
+                response.Message = ex.Message;
+
+            }
+            return Ok(response);
+        }
+        
+        
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            if (id <= 0)
-                return BadRequest("Not a valid id");
-
-            using (var ctx = new sdirecttestdbEntities1())
+            ResponseModel response = new ResponseModel();
+            try
             {
-                var utility = ctx.Utilities
-                    .Where(s => s.ID == id)
-                    .FirstOrDefault();
 
-                ctx.Entry(utility).State = System.Data.Entity.EntityState.Deleted;
-                ctx.SaveChanges();
+
+                if (id <= 0)
+                    return BadRequest("Not a valid id");
+
+                using (var ctx = new sdirecttestdbEntities1())
+                {
+                    var utility = ctx.Utilities
+                        .Where(s => s.ID == id)
+                        .FirstOrDefault();
+
+                    //ctx.Entry(utility).State = System.Data.Entity.EntityState.Deleted;
+                    utility.IsDeleted = true;
+                    utility.ModifiedBy = Environment.UserName;
+                    utility.ModifiedDate = System.DateTime.Now;
+                    ctx.SaveChanges();
+                }
+                response.StatusCode = 200;
+                response.Message = "Success";
+            }
+            catch(Exception ex)
+            {
+                response.StatusCode = 400;
+                response.Message = ex.Message; 
             }
 
-            return Ok();
+            return Ok(response);
         }
         
        

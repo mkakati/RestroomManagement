@@ -1,4 +1,5 @@
 ﻿using RestroomManagement.Models;
+using RestroomManagement.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,30 +11,56 @@ namespace RestroomManagement.Controllers
 {
     public class ReportController : ApiController
     {
-        public IList<Utility_Report_Result> GetSampleData()
+        public IList<Report> GetSampleData()
         {
-            List<Utility_Report_Result> listx = new List<Utility_Report_Result>();
+            List<Report> listx = new List<Report>();
             using (sdirecttestdbEntities1 test = new sdirecttestdbEntities1())
             {
                 var result = test.Utility_Report().ToList();
                 foreach (var item in result.ToList())
                 {
-                    listx.Add(new Utility_Report_Result
+                    listx.Add(new Report
                     {
                         U_ID = item.U_ID,
                         Name = item.Name,
                         //CreatedDate = item.CreatedDate,
                         ReadingDate = item.ReadingDate,
-                        IsDone = item.IsDone,
+                        IsDone = ((item.IsDone) ? "Yes" : "No"),
                         ShiftId = item.ShiftId,
                         ShiftName = item.ShiftName,
-                        Feedback = item.Feedback
-                    });
+                        Feedback = item.Feedback,
 
+                    });
                 }
                 return listx;
             }
         }
+        //public IList<Utility_Report_Result> GetSampleData()
+        //{
+        //    List<Utility_Report_Result> listx = new List<Utility_Report_Result>();
+        //    using (sdirecttestdbEntities1 test = new sdirecttestdbEntities1())
+        //    {
+        //        var result = test.Utility_Report().ToList();
+        //        foreach (var item in result.ToList())
+        //        {
+        //            listx.Add(new Utility_Report_Result
+        //            {
+        //                U_ID = item.U_ID,
+        //                Name = item.Name,
+        //                //CreatedDate = item.CreatedDate,
+        //                ReadingDate = item.ReadingDate,
+        //                IsDone = item.IsDone,
+        //                ShiftId = item.ShiftId,
+        //                ShiftName = item.ShiftName,
+        //                Feedback = item.Feedback,
+
+        //            });
+
+
+        //        }
+        //        return listx;
+        //    }
+        //}
         //public IHttpActionResult GetAllStudents()
         //{
         //    IList<Utility_Report_Result> students = null;

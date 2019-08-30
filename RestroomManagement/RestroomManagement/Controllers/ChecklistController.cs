@@ -26,12 +26,17 @@ namespace RestroomManagement.Controllers
                     Feedback = checklist_Utility.Feedback,
                     CreatedDate = System.DateTime.UtcNow,
                     ReadingDate = checklist_Utility.ReadingDate,
+                    IsActive = checklist_Utility.IsActive
                     
 
                 });
+                var uti=ctx.Utilities.Where(x => x.ID == checklist_Utility.U_ID).FirstOrDefault();
+                uti.IsActive = true;
+
                 ctx.SaveChanges();
             }
-            return Ok();
+            
+                return Ok();
         }
 
 
